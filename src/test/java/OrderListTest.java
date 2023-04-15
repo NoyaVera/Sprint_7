@@ -15,6 +15,7 @@ public class OrderListTest {
         ValidatableResponse response = orderClient.orderList();
         response.assertThat()
                 .statusCode(SC_OK)
+                .and()
                 .body("orders", notNullValue());
     }
 }
