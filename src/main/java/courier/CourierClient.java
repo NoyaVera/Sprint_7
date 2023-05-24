@@ -31,10 +31,10 @@ public class CourierClient extends Client{
 
     @Step("Пробуем получить id созданного курьера")
     public static int getCourierId(String login, String password) {
-        Courier courierTest = new Courier(login, password, null);
+        Courier courier = new Courier(login, password, null);
         return given()
                 .spec(getSpec())
-                .body(courierTest)
+                .body(courier)
                 .post(PATH_LOGIN)
                 .then().extract().path("id");
     }

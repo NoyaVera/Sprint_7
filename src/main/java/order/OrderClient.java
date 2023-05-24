@@ -1,43 +1,37 @@
 package order;
 
+import courier.Client;
 import io.qameta.allure.Step;
-import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
 
-public class OrderClient {
-    public static final String BASE_URL = "http://qa-scooter.praktikum-services.ru/";
-
+public class OrderClient extends Client {
     @Step("Создание нового заказа")
     public static ValidatableResponse createOrder(Order order) {
         return given().log().all()
-                .contentType(ContentType.JSON)
-                .baseUri(BASE_URL)
-                .body(order)
+                .spec(Client.getSpec())
                 .when()
-                .post("api/v1/orders")
+                .post(PATH_ORDER)
                 .then();
     }
 
     @Step("Получение списка заказов")
     public ValidatableResponse orderList() {
         return given().log().all()
-                .contentType(ContentType.JSON)
-                .baseUri(BASE_URL)
+                .spec(Client.getSpec())
                 .when()
-                .get("api/v1/orders")
+                .get(PATH_ORDER)
                 .then();
     }
 
     @Step("Удаление заказа")
     public ValidatableResponse deleteOrder(int track) {
         return given().log().all()
-                .contentType(ContentType.JSON)
-                .baseUri(BASE_URL)
+                .spec(Client.getSpec())
                 .body(track)
                 .when()
-                .put("api/v1/orders/cancel")
+                .put(PATH_ORDER_CANCEL)
                 .then();
     }
 }
